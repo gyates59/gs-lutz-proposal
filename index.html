@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Lutz Petroleum Market Program &#8212; Agreement &amp; Activation</title>
+<style>
+  :root { --navy:#0D1B31; --blue:#2169C6; --cyan:#29BAE6; --ink:#1A2330; --mut:#5A6675;
+          --line:#E1E5EA; --wash:#F4F7FA; --warm:#B45309; --warmbg:#FBF0DF; --good:#1F7A3D; }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: "Segoe UI", system-ui, Arial, sans-serif; color: var(--ink); background: #EEF1F5; }
+  .wrap { max-width: 780px; margin: 0 auto; padding: 28px 18px 60px; }
+  .card { background: #fff; border-radius: 14px; box-shadow: 0 2px 14px rgba(13,27,49,.08); padding: 28px 30px; }
+
+  .head { display: flex; align-items: center; justify-content: space-between; gap: 12px;
+          border-bottom: 3px solid var(--navy); padding-bottom: 12px; flex-wrap: wrap; }
+  .head .brand { font-weight: 800; letter-spacing: .04em; font-size: 18px; color: var(--navy); }
+  .head .brand span { display:block; font-size: 10px; letter-spacing: .18em; color: var(--mut); font-weight: 600; }
+  .head .kicker { text-align: right; }
+  .head .kicker b { display: block; font-size: 11px; letter-spacing: .1em; color: var(--navy); }
+  .head .kicker span { font-size: 9.5px; color: var(--mut); letter-spacing: .06em; }
+
+  h1 { font-size: 23px; margin: 18px 0 6px; color: var(--navy); }
+  .momentum { background: var(--wash); border-left: 4px solid var(--blue); padding: 12px 16px;
+              font-size: 13.5px; line-height: 1.5; margin: 12px 0 18px; border-radius: 0 8px 8px 0; }
+
+  h3 { font-size: 12px; color: var(--blue); letter-spacing: .08em; text-transform: uppercase; margin: 22px 0 10px; }
+  label { display: block; font-size: 12.5px; font-weight: 600; color: var(--navy); margin: 12px 0 4px; }
+  input[type=text], input[type=email], input[type=number], textarea, select {
+    width: 100%; padding: 9px 12px; border: 1.5px solid var(--line); border-radius: 8px;
+    font-size: 14px; font-family: inherit; background: #FDFEFF; }
+  input:focus, textarea:focus { outline: 2px solid var(--cyan); border-color: var(--blue); }
+  .row2 { display: grid; grid-template-columns: 1fr 1fr; gap: 0 18px; }
+  @media (max-width: 620px) { .row2 { grid-template-columns: 1fr; } }
+  .hint { font-size: 11.5px; color: var(--mut); margin-top: 3px; }
+
+  .live { font-size: 13px; line-height: 1.55; margin: 0 0 4px 18px; }
+  .live li { margin-bottom: 4px; }
+  .live b { color: var(--navy); }
+
+  .lineitem { display: flex; align-items: flex-start; gap: 12px; border: 1.5px solid var(--line);
+              border-radius: 10px; padding: 13px 15px; margin-bottom: 10px; }
+  .lineitem.locked { background: var(--wash); }
+  .lineitem input { width: 19px; height: 19px; margin-top: 2px; accent-color: var(--navy); flex: none; }
+  .lineitem .t b { font-size: 14px; color: var(--navy); }
+  .lineitem .t .inc { font-size: 9px; font-weight: 700; letter-spacing: .06em; color: var(--good);
+                      background: #E7F4EC; border-radius: 4px; padding: 2px 6px; margin-left: 6px; vertical-align: 2px; }
+  .lineitem .t p { font-size: 12px; color: var(--mut); line-height: 1.4; margin-top: 2px; }
+  .lineitem .price { margin-left: auto; font-weight: 700; color: var(--navy); white-space: nowrap; font-size: 14px; text-align: right; }
+  .lineitem .price small { font-weight: 400; color: var(--mut); }
+
+  .tiers { width: 100%; border-collapse: collapse; font-size: 13px; margin: 6px 0 4px; }
+  .tiers th { text-align: left; font-size: 10.5px; letter-spacing: .07em; color: var(--mut); text-transform: uppercase;
+              border-bottom: 1.5px solid var(--line); padding: 6px 8px; }
+  .tiers td { padding: 8px; border-bottom: 1px solid var(--line); }
+  .tiers td.r { text-align: right; font-weight: 700; color: var(--navy); white-space: nowrap; }
+
+  .payrow { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  .paychoice { border: 1.5px solid var(--line); border-radius: 10px; padding: 12px 14px; cursor: pointer; display: flex; gap: 10px; align-items: flex-start; }
+  .paychoice input { width: 18px; height: 18px; margin-top: 1px; accent-color: var(--navy); }
+  .paychoice b { font-size: 13.5px; color: var(--navy); display: block; }
+  .paychoice span { font-size: 11.5px; color: var(--mut); }
+  .paychoice.sel { border-color: var(--blue); background: #F6FAFF; }
+
+  .total { display: flex; justify-content: space-between; align-items: baseline; background: var(--navy);
+           color: #fff; border-radius: 10px; padding: 14px 18px; margin-top: 14px; }
+  .total .lbl { font-size: 13px; letter-spacing: .04em; }
+  .total .amt { font-size: 24px; font-weight: 800; }
+  .total .amt small { font-size: 12px; font-weight: 400; color: #B9C6D8; }
+  .total.sub { background: var(--wash); color: var(--navy); padding: 11px 18px; margin-top: 8px; }
+  .total.sub .amt { font-size: 18px; }
+  .total.sub .amt small { color: var(--mut); }
+
+  .est { background: #FBFCFE; border: 1.5px solid var(--line); border-radius: 10px; padding: 14px 16px; }
+  .est .row2 { margin-bottom: 4px; }
+  .estline { display: flex; justify-content: space-between; font-size: 13px; padding: 6px 2px; border-bottom: 1px solid var(--line); }
+  .estline b { color: var(--navy); }
+  .estline:last-child { border-bottom: none; }
+  .estline .big { font-size: 16px; font-weight: 800; color: var(--navy); }
+
+  .scope { background: #FBFCFE; border: 1.5px solid var(--line); border-radius: 10px; padding: 14px 16px; font-size: 12.5px; line-height: 1.5; }
+  .scope b { color: var(--navy); }
+  .scope ul { margin: 6px 0 6px 18px; }
+  .scope li { margin-bottom: 3px; color: var(--mut); }
+  .scope li b { color: var(--navy); }
+
+  .sigblock { background: var(--wash); border-radius: 10px; padding: 16px 18px; margin-top: 10px; }
+  .authbox { display: flex; gap: 10px; align-items: flex-start; margin-top: 12px; font-size: 12.5px; line-height: 1.5; }
+  .authbox input { width: 20px; height: 20px; accent-color: var(--navy); flex: none; margin-top: 1px; }
+  .siginput { font-family: "Segoe Script", "Brush Script MT", cursive; font-size: 20px !important; }
+
+  .terms { font-size: 11px; color: var(--mut); line-height: 1.5; margin-top: 16px; }
+  .submit { width: 100%; background: var(--navy); color: #fff; border: none; border-radius: 10px;
+            padding: 15px; font-size: 16px; font-weight: 700; cursor: pointer; margin-top: 18px; font-family: inherit; }
+  .submit:hover { background: #16294a; }
+  .submit:disabled { background: #8FA1B8; cursor: wait; }
+  .err { color: #B00020; font-size: 13px; margin-top: 10px; display: none; }
+
+  #done { display: none; text-align: center; padding: 40px 20px; }
+  #done .big { font-size: 46px; }
+  #done h2 { color: var(--navy); margin: 10px 0 8px; }
+  #done p { color: var(--mut); font-size: 14.5px; line-height: 1.6; max-width: 480px; margin: 0 auto 8px; }
+
+  .foot { text-align: center; font-size: 11px; color: var(--mut); margin-top: 18px; letter-spacing: .04em; }
+  .foot b { color: var(--navy); }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="card">
+    <div class="head">
+      <div class="brand">GROUPSERV<span>MANAGEMENT</span></div>
+      <div class="kicker"><b>THE LUTZ PETROLEUM MARKET PROGRAM</b><span>POWERED BY THE GROUPSERV MOMENTUM ENGINE</span></div>
+    </div>
+
+    <div id="form">
+      <h1>Agreement &amp; Activation</h1>
+      <div class="momentum"><b>Anyone can mail every mailbox and hope.</b> Roughly 1,945 households across
+      Rutherford and Polk counties heat with oil or kerosene &#8212; about one home in eighteen. We know which
+      ones, we verify them, and this program puts the Lutz name in front of exactly those households &#8212;
+      while a separate referral card works the ~600 customers you already serve.</div>
+
+      <h3>What's live the day you sign</h3>
+      <ul class="live">
+        <li><b>The verified oil-heat home audience</b> &#8212; the ~1,945-household universe across your
+        seventeen ZIP codes, resolved to specific, verified addresses: built from housing &amp; property
+        records plus live heating-research behavior, challenged and cross-validated before a single
+        piece mails.</li>
+        <li><b>Your current customers protected</b> &#8212; your account list is suppressed from every
+        new-business send. Not one dollar of postage goes to a household you already serve.</li>
+        <li><b>Two cards, two jobs</b> &#8212; a <b>new-business postcard</b> to the verified oil-heat homes,
+        and a separate <b>referral card</b> to your ~600 current customers with its own offer. Different
+        message, different code, both measured.</li>
+        <li><b>Design included</b> &#8212; we design both cards with you: the heritage photo, the family,
+        the trucks, the offer &#8212; and a QR code that can carry a personal video message from the owner.</li>
+        <li><b>A real scoreboard</b> &#8212; dedicated tracking number and offer code on every piece, reported
+        against the true ~1,945-home denominator. You'll know what every drop produced.</li>
+        <li><b>Season timing</b> &#8212; first drop targeted for the end of September, follow-ups two to three
+        weeks apart as temperatures fall. You approve every deployment before it mails.</li>
+      </ul>
+
+      <h3>The program</h3>
+      <div class="lineitem locked">
+        <input type="checkbox" checked disabled>
+        <div class="t"><b>Data &amp; services base</b><span class="inc">THE ENGINE</span>
+          <p>Audience build, verification &amp; season-long maintenance &#183; current-customer suppression &#183;
+          card design &amp; creative for both tracks &#183; drop planning &amp; list preparation for every
+          deployment &#183; dedicated tracking number, offer codes &amp; scoreboard reporting.</p></div>
+        <div class="price">$500<small>/mo</small></div>
+      </div>
+      <div class="lineitem locked">
+        <input type="checkbox" checked disabled>
+        <div class="t"><b>Postcard production &amp; mailing</b>
+          <p>Printed, addressed, and mailed &#8212; billed per deployment at the quantity actually mailed,
+          only when you approve a drop. Larger runs above 5,000 pieces are quoted individually.</p>
+          <table class="tiers">
+            <tr><th>Pieces in a deployment</th><th style="text-align:right">Per piece</th></tr>
+            <tr><td>Up to 2,500</td><td class="r">$1.20</td></tr>
+            <tr><td>2,501 &#8211; 5,000</td><td class="r">$1.09</td></tr>
+          </table></div>
+      </div>
+
+      <h3>Plan your first deployment <span style="color:var(--mut);text-transform:none;letter-spacing:0;font-weight:400">&#8212; an estimate, not a charge today</span></h3>
+      <div class="est">
+        <div class="row2">
+          <div><label style="margin-top:0">New-business postcards</label>
+            <input type="number" id="qnew" value="1900" min="0" max="5000" step="50" onchange="recalc()" oninput="recalc()">
+            <div class="hint">Verified oil-heat homes, current customers excluded.</div></div>
+          <div><label style="margin-top:0">Referral cards to current customers</label>
+            <input type="number" id="qref" value="600" min="0" max="5000" step="50" onchange="recalc()" oninput="recalc()">
+            <div class="hint">Your account list, separate offer &amp; code.</div></div>
+        </div>
+        <div class="estline"><span>Total pieces this deployment</span><b id="eqty">2,500</b></div>
+        <div class="estline"><span>Per-piece rate at this volume</span><b id="erate">$1.20</b></div>
+        <div class="estline"><span>Estimated deployment cost <span id="ecard" style="color:var(--mut)"></span></span><span class="big" id="etot">$3,000</span></div>
+      </div>
+      <div class="hint">Each deployment is approved by you and invoiced when it mails. Adjust quantities
+      anytime &#8212; the audience and the math move with you.</div>
+
+      <h3>Payment method</h3>
+      <div class="payrow">
+        <label class="paychoice sel" id="pc-ach"><input type="radio" name="pay" value="ach" checked onchange="recalc()">
+          <span><b>Bank transfer (ACH)</b><span>Included &#8212; no processing fee</span></span></label>
+        <label class="paychoice" id="pc-card"><input type="radio" name="pay" value="card" onchange="recalc()">
+          <span><b>Credit card</b><span>+3% processing addition</span></span></label>
+      </div>
+      <div class="total"><span class="lbl">DUE AT SIGNING <span style="font-weight:400;color:#B9C6D8;">&#183; first month</span></span><span class="amt" id="duenow">$500</span></div>
+      <div class="total sub"><span class="lbl">THEN MONTHLY <span style="font-weight:400;color:#5A6675;">&#183; month-to-month, cancel anytime</span></span><span class="amt" id="monthly">$500 <small>/mo</small></span></div>
+      <div class="total sub"><span class="lbl">POSTCARD DEPLOYMENTS <span style="font-weight:400;color:#5A6675;">&#183; per drop, when you approve them</span></span><span class="amt" style="font-size:14px">$1.20 / $1.09 <small>per piece</small></span></div>
+
+      <h3>Program contact</h3>
+      <div class="row2">
+        <div><label>Primary contact name <span style="color:#B00020">*</span></label><input type="text" id="aname" placeholder="Who runs point on this program" value="Ryan Claterbaugh"></div>
+        <div><label>Primary contact email <span style="color:#B00020">*</span></label><input type="email" id="aemail" placeholder="Where reports &amp; proofs go"></div>
+      </div>
+      <div class="row2">
+        <div><label>Best phone for campaign coordination</label><input type="text" id="delivery" placeholder="Cell or office"></div>
+        <div><label>Your website</label><input type="text" id="website" placeholder="https://&#8230;"></div>
+      </div>
+
+      <h3>Offers &amp; notes (optional)</h3>
+      <textarea id="notes" rows="3" placeholder="First-fill discount, automatic-delivery enrollment, referral reward ideas &#8212; whatever you're leaning toward. We'll finalize the offers together during design."></textarea>
+
+      <h3>What happens after you sign</h3>
+      <div class="scope">
+        <ul>
+          <li><b>1. Payment link arrives by email</b> &#8212; the first month is billed via secure link; nothing else is charged today.</li>
+          <li><b>2. You send us the raw material</b> &#8212; your current customer list (for suppression and the referral send), plus photos: the family, the historic company shot, the trucks.</li>
+          <li><b>3. We design both cards</b> &#8212; proofs to you for approval; nothing prints without your sign-off.</li>
+          <li><b>4. First drop mails</b> &#8212; targeted for end of September, with the tracking number and offer codes live. Follow-ups roll every two to three weeks as the season cools.</li>
+        </ul>
+      </div>
+
+      <h3>Authorization</h3>
+      <div class="sigblock">
+        <div class="row2">
+          <div><label>Your name <span style="color:#B00020">*</span></label><input type="text" id="sname"></div>
+          <div><label>Title</label><input type="text" id="stitle"></div>
+        </div>
+        <div class="row2">
+          <div><label>Organization <span style="color:#B00020">*</span></label><input type="text" id="sorg" placeholder="Legal entity name" value="Lutz Petroleum (S &amp; C Fuel Delivery)"></div>
+          <div><label>Email <span style="color:#B00020">*</span></label><input type="email" id="semail"></div>
+        </div>
+        <label>Type your full name as your signature <span style="color:#B00020">*</span></label>
+        <input type="text" id="sig" class="siginput" placeholder="Signature">
+        <div class="authbox">
+          <input type="checkbox" id="auth">
+          <span>I am authorized to execute this agreement on behalf of the organization named above, and I
+          agree this electronically executed page constitutes the entire agreement for these services.
+          I understand the <b>$500 monthly data &amp; services fee</b> is billed now for the first month via
+          secure payment link and then monthly thereafter, month-to-month &#8212; either party may cancel with
+          30 days&#8217; written notice, effective at the end of the current cycle. Postcard deployments are
+          separately approved by me before each mailing and invoiced at the per-piece rates shown, at the
+          quantity actually mailed. The payment method selected above applies to the monthly fee and to
+          deployment invoices; credit card payments carry a 3% processing addition. Audience data is licensed
+          to our organization for its own marketing use and will not be resold or redistributed.</span>
+        </div>
+      </div>
+
+      <div class="err" id="err"></div>
+      <button class="submit" id="go" onclick="submitProposal()">Execute &amp; Activate</button>
+      <div class="terms">Design of the new-business postcard and referral card is included in the program;
+      additional creative formats (letters, inserts, signage) are quoted individually. Deployment invoices
+      reflect the actual mailed quantity verified at the mail house. Responsibility for offer terms and
+      outreach compliance rests with the sender. Fees exclude any applicable taxes.
+      Accepted for Groupserv Management: Greg Yates &#183; gyates@groupserv.biz</div>
+    </div>
+
+    <div id="done">
+      <div class="big">&#10003;</div>
+      <h2>Received &#8212; the season starts now.</h2>
+      <p><b>What happens next:</b> your payment link arrives by email shortly. The moment it&#8217;s confirmed,
+      we&#8217;ll request your customer list and photos, and design work on both cards begins &#8212; on pace for
+      the end-of-September first drop.</p>
+      <p>Data finds names. Momentum wins markets.</p>
+    </div>
+  </div>
+  <div class="foot"><b>GROUPSERV</b> &#183; Data finds names. Momentum wins markets.</div>
+</div>
+
+<script>
+const ENDPOINT = "https://pboxaamvtrgwnhgfccbv.supabase.co/functions/v1/proposal-submit";
+const TOKEN = "gsm-proposal-2026";
+const BASE = 500;
+
+function pieceRate(q) { return q > 2500 ? 1.09 : 1.20; }
+function isCard() { return document.querySelector('input[name=pay]:checked').value === "card"; }
+function qty(id) { const v = parseInt(document.getElementById(id).value, 10); return isNaN(v) || v < 0 ? 0 : Math.min(v, 5000); }
+
+function recalc() {
+  const card = isCard();
+  const monthly = card ? Math.round(BASE * 1.03) : BASE;
+  document.getElementById("monthly").innerHTML = "$" + monthly.toLocaleString() + " <small>/mo" + (card ? " incl. 3%" : "") + "</small>";
+  document.getElementById("duenow").innerHTML = "$" + monthly.toLocaleString();
+  const q = qty("qnew") + qty("qref");
+  const rate = pieceRate(q);
+  let tot = q * rate;
+  if (card) tot = tot * 1.03;
+  document.getElementById("eqty").textContent = q.toLocaleString();
+  document.getElementById("erate").textContent = "$" + rate.toFixed(2);
+  document.getElementById("etot").textContent = "$" + Math.round(tot).toLocaleString();
+  document.getElementById("ecard").textContent = card ? "(incl. 3% card)" : "";
+  document.getElementById("pc-ach").classList.toggle("sel", !card);
+  document.getElementById("pc-card").classList.toggle("sel", card);
+}
+recalc();
+
+async function submitProposal() {
+  const err = document.getElementById("err");
+  err.style.display = "none";
+  const get = id => document.getElementById(id).value.trim();
+  if (!get("aname") || !get("aemail")) return showErr("Please enter the primary contact name and email.");
+  if (!get("sorg")) return showErr("Please enter the organization name.");
+  if (!get("sname") || !get("semail")) return showErr("Please enter your name and email.");
+  if (!get("sig")) return showErr("Please type your name as your signature.");
+  if (!document.getElementById("auth").checked) return showErr("Please check the authorization box.");
+  const card = isCard();
+  const monthly = card ? Math.round(BASE * 1.03) : BASE;
+  const q = qty("qnew") + qty("qref");
+  const btn = document.getElementById("go");
+  btn.disabled = true; btn.textContent = "Executing…";
+  try {
+    const res = await fetch(ENDPOINT, { method: "POST", headers: { "content-type": "application/json" },
+      body: JSON.stringify({
+        token: TOKEN, program: "lutz",
+        territory_name: get("sorg"),
+        plan: "market-program",
+        plan_label: "Market Program - $500/mo data & services + postcards $1.20/$1.09 per piece",
+        setup_fee: 0, due_now: monthly,
+        payment_method: card ? "card" : "ach",
+        admin: { name: get("aname"), email: get("aemail") },
+        monthly_total: monthly,
+        chairs: [],
+        zips_text: "First deployment estimate: " + qty("qnew") + " new-business + " + qty("qref") +
+          " referral = " + q + " pieces @ $" + pieceRate(q).toFixed(2) +
+          (get("notes") ? " | OFFER NOTES: " + get("notes") : ""),
+        delivery_endpoint: get("delivery"), website: get("website"),
+        signer_name: get("sname"), signer_title: get("stitle"), signer_org: get("sorg"),
+        signer_email: get("semail"), signature_typed: get("sig"), authorized: true
+      })});
+    const j = await res.json();
+    if (!res.ok || !j.ok) throw new Error(j.error || "submit failed");
+    document.getElementById("form").style.display = "none";
+    document.getElementById("done").style.display = "block";
+    window.scrollTo({ top: 0 });
+  } catch (e) {
+    btn.disabled = false; btn.textContent = "Execute & Activate";
+    showErr("Something went wrong sending this — please try again, or email gyates@groupserv.biz.");
+  }
+}
+function showErr(m) { const e = document.getElementById("err"); e.textContent = m; e.style.display = "block"; }
+</script>
+</body>
+</html>

@@ -118,7 +118,8 @@
       <div class="momentum"><b>Anyone can mail every mailbox and hope.</b> Roughly 1,945 households across
       Rutherford and Polk counties heat with oil or kerosene &#8212; about one home in eighteen. We know which
       ones, we verify them, and this program puts the Lutz name in front of exactly those households &#8212;
-      while a separate referral card works the ~600 customers you already serve.</div>
+      two cards, every month: a referral card to the customers you already serve, and a new-business card
+      to the oil-heat homes you don't. Yet.</div>
 
       <h3>What's live the day you sign</h3>
       <ul class="live">
@@ -126,11 +127,13 @@
         seventeen ZIP codes, resolved to specific, verified addresses: built from housing &amp; property
         records plus live heating-research behavior, challenged and cross-validated before a single
         piece mails.</li>
-        <li><b>Your current customers protected</b> &#8212; your account list is suppressed from every
-        new-business send. Not one dollar of postage goes to a household you already serve.</li>
+        <li><b>Your current customers, sorted to the right message</b> &#8212; your ~600 accounts almost
+        certainly sit inside that 1,945-home universe. Once your customer list is separated, they move to
+        the referral track &#8212; and the new-business card goes only to the homes you don't already
+        serve. No wasted postage, no wrong message in the wrong mailbox.</li>
         <li><b>Two cards, two jobs</b> &#8212; a <b>new-business postcard</b> to the verified oil-heat homes,
-        and a separate <b>referral card</b> to your ~600 current customers with its own offer. Different
-        message, different code, both measured.</li>
+        and a <b>referral card</b> to your current customers with its own offer. Different message,
+        different code, both measured.</li>
         <li><b>Design included</b> &#8212; we design both cards with you: the heritage photo, the family,
         the trucks, the offer &#8212; and a QR code that can carry a personal video message from the owner.</li>
         <li><b>A real scoreboard</b> &#8212; dedicated tracking number and offer code on every piece, reported
@@ -143,39 +146,44 @@
       <div class="lineitem locked">
         <input type="checkbox" checked disabled>
         <div class="t"><b>Data &amp; services base</b><span class="inc">THE ENGINE</span>
-          <p>Audience build, verification &amp; season-long maintenance &#183; current-customer suppression &#183;
-          card design &amp; creative for both tracks &#183; drop planning &amp; list preparation for every
-          deployment &#183; dedicated tracking number, offer codes &amp; scoreboard reporting.</p></div>
+          <p>Audience build, verification &amp; season-long maintenance &#183; customer-list separation
+          (referral track vs. new-business track) &#183; card design &amp; creative for both tracks &#183;
+          drop planning &amp; list preparation for every deployment &#183; dedicated tracking number, offer
+          codes &amp; scoreboard reporting.</p></div>
         <div class="price">$500<small>/mo</small></div>
       </div>
       <div class="lineitem locked">
         <input type="checkbox" checked disabled>
         <div class="t"><b>Postcard production &amp; mailing</b>
-          <p>Printed, addressed, and mailed &#8212; billed per deployment at the quantity actually mailed,
-          only when you approve a drop. Larger runs above 5,000 pieces are quoted individually.</p>
+          <p>Printed, addressed, and mailed. <b>Planning basis: ~2,000 cards per month, two designs</b>
+          &#8212; the referral card to your current customers, the new-business card to the balance.
+          Billed monthly on that fixed estimate at the per-piece rates below, then <b>debited or credited
+          to the actual quantity mailed</b>. Runs above 5,000 pieces are quoted individually.</p>
           <table class="tiers">
-            <tr><th>Pieces in a deployment</th><th style="text-align:right">Per piece</th></tr>
+            <tr><th>Pieces in a monthly deployment</th><th style="text-align:right">Per piece</th></tr>
             <tr><td>Up to 2,500</td><td class="r">$1.20</td></tr>
             <tr><td>2,501 &#8211; 5,000</td><td class="r">$1.09</td></tr>
           </table></div>
       </div>
 
-      <h3>Plan your first deployment <span style="color:var(--mut);text-transform:none;letter-spacing:0;font-weight:400">&#8212; an estimate, not a charge today</span></h3>
+      <h3>The monthly deployment <span style="color:var(--mut);text-transform:none;letter-spacing:0;font-weight:400">&#8212; the planning estimate, reconciled to actual every month</span></h3>
       <div class="est">
         <div class="row2">
           <div><label style="margin-top:0">New-business postcards</label>
-            <input type="number" id="qnew" value="1900" min="0" max="5000" step="50" onchange="recalc()" oninput="recalc()">
-            <div class="hint">Verified oil-heat homes, current customers excluded.</div></div>
+            <input type="number" id="qnew" value="1400" min="0" max="5000" step="50" onchange="recalc()" oninput="recalc()">
+            <div class="hint">Verified oil-heat homes you don't already serve &#8212; the balance after your customer list is separated.</div></div>
           <div><label style="margin-top:0">Referral cards to current customers</label>
             <input type="number" id="qref" value="600" min="0" max="5000" step="50" onchange="recalc()" oninput="recalc()">
             <div class="hint">Your account list, separate offer &amp; code.</div></div>
         </div>
-        <div class="estline"><span>Total pieces this deployment</span><b id="eqty">2,500</b></div>
+        <div class="estline"><span>Total cards per month</span><b id="eqty">2,000</b></div>
         <div class="estline"><span>Per-piece rate at this volume</span><b id="erate">$1.20</b></div>
-        <div class="estline"><span>Estimated deployment cost <span id="ecard" style="color:var(--mut)"></span></span><span class="big" id="etot">$3,000</span></div>
+        <div class="estline"><span>Estimated monthly card cost <span id="ecard" style="color:var(--mut)"></span></span><b id="etot">$2,400</b></div>
+        <div class="estline"><span>Estimated monthly program &#8212; base + cards</span><span class="big" id="eprog">$2,900</span></div>
       </div>
-      <div class="hint">Each deployment is approved by you and invoiced when it mails. Adjust quantities
-      anytime &#8212; the audience and the math move with you.</div>
+      <div class="hint">The estimate keeps one fixed monthly number in place. Each month we reconcile:
+      mailed fewer pieces, you're credited &#8212; mailed more, the difference is added. You approve every
+      deployment before it mails.</div>
 
       <h3>Payment method</h3>
       <div class="payrow">
@@ -184,9 +192,9 @@
         <label class="paychoice" id="pc-card"><input type="radio" name="pay" value="card" onchange="recalc()">
           <span><b>Credit card</b><span>+3% processing addition</span></span></label>
       </div>
-      <div class="total"><span class="lbl">DUE AT SIGNING <span style="font-weight:400;color:#B9C6D8;">&#183; first month</span></span><span class="amt" id="duenow">$500</span></div>
-      <div class="total sub"><span class="lbl">THEN MONTHLY <span style="font-weight:400;color:#5A6675;">&#183; month-to-month, cancel anytime</span></span><span class="amt" id="monthly">$500 <small>/mo</small></span></div>
-      <div class="total sub"><span class="lbl">POSTCARD DEPLOYMENTS <span style="font-weight:400;color:#5A6675;">&#183; per drop, when you approve them</span></span><span class="amt" style="font-size:14px">$1.20 / $1.09 <small>per piece</small></span></div>
+      <div class="total"><span class="lbl">DUE AT SIGNING <span style="font-weight:400;color:#B9C6D8;">&#183; first month of the base</span></span><span class="amt" id="duenow">$500</span></div>
+      <div class="total sub"><span class="lbl">THEN MONTHLY <span style="font-weight:400;color:#5A6675;">&#183; base, month-to-month, cancel anytime</span></span><span class="amt" id="monthly">$500 <small>/mo</small></span></div>
+      <div class="total sub"><span class="lbl">CARD PROGRAM <span style="font-weight:400;color:#5A6675;">&#183; est. ~2,000 cards/mo once mailing begins, reconciled to actual</span></span><span class="amt" style="font-size:14px" id="cardbar">$2,400 <small>/mo est.</small></span></div>
 
       <h3>Program contact</h3>
       <div class="row2">
@@ -204,8 +212,8 @@
       <h3>What happens after you sign</h3>
       <div class="scope">
         <ul>
-          <li><b>1. Payment link arrives by email</b> &#8212; the first month is billed via secure link; nothing else is charged today.</li>
-          <li><b>2. You send us the raw material</b> &#8212; your current customer list (for suppression and the referral send), plus photos: the family, the historic company shot, the trucks.</li>
+          <li><b>1. Payment link arrives by email</b> &#8212; the first month of the base is billed via secure link; card deployments bill only when mailing begins.</li>
+          <li><b>2. You send us the raw material</b> &#8212; your current customer list (so we can separate the referral track from the new-business track), plus photos: the family, the historic company shot, the trucks.</li>
           <li><b>3. We design both cards</b> &#8212; proofs to you for approval; nothing prints without your sign-off.</li>
           <li><b>4. First drop mails</b> &#8212; targeted for end of September, with the tracking number and offer codes live. Follow-ups roll every two to three weeks as the season cools.</li>
         </ul>
@@ -229,19 +237,21 @@
           agree this electronically executed page constitutes the entire agreement for these services.
           I understand the <b>$500 monthly data &amp; services fee</b> is billed now for the first month via
           secure payment link and then monthly thereafter, month-to-month &#8212; either party may cancel with
-          30 days&#8217; written notice, effective at the end of the current cycle. Postcard deployments are
-          separately approved by me before each mailing and invoiced at the per-piece rates shown, at the
-          quantity actually mailed. The payment method selected above applies to the monthly fee and to
-          deployment invoices; credit card payments carry a 3% processing addition. Audience data is licensed
-          to our organization for its own marketing use and will not be resold or redistributed.</span>
+          30 days&#8217; written notice, effective at the end of the current cycle. Postcard deployments run
+          on a planning estimate of approximately 2,000 cards per month across the two designs (adjustable
+          with me), are billed at the per-piece rates shown, and are <b>debited or credited each month to the
+          actual quantity mailed</b>; I approve every deployment before it mails. The payment method selected
+          above applies to the monthly fee and to deployment billing; credit card payments carry a 3%
+          processing addition. Audience data is licensed to our organization for its own marketing use and
+          will not be resold or redistributed.</span>
         </div>
       </div>
 
       <div class="err" id="err"></div>
       <button class="submit" id="go" onclick="submitProposal()">Execute &amp; Activate</button>
       <div class="terms">Design of the new-business postcard and referral card is included in the program;
-      additional creative formats (letters, inserts, signage) are quoted individually. Deployment invoices
-      reflect the actual mailed quantity verified at the mail house. Responsibility for offer terms and
+      additional creative formats (letters, inserts, signage) are quoted individually. Deployment billing
+      reconciles to the actual mailed quantity verified at the mail house. Responsibility for offer terms and
       outreach compliance rests with the sender. Fees exclude any applicable taxes.
       Accepted for Groupserv Management: Greg Yates &#183; gyates@groupserv.biz</div>
     </div>
@@ -276,10 +286,13 @@ function recalc() {
   const rate = pieceRate(q);
   let tot = q * rate;
   if (card) tot = tot * 1.03;
+  tot = Math.round(tot);
   document.getElementById("eqty").textContent = q.toLocaleString();
   document.getElementById("erate").textContent = "$" + rate.toFixed(2);
-  document.getElementById("etot").textContent = "$" + Math.round(tot).toLocaleString();
+  document.getElementById("etot").textContent = "$" + tot.toLocaleString();
+  document.getElementById("eprog").textContent = "$" + (tot + monthly).toLocaleString();
   document.getElementById("ecard").textContent = card ? "(incl. 3% card)" : "";
+  document.getElementById("cardbar").innerHTML = "$" + tot.toLocaleString() + " <small>/mo est." + (card ? " incl. 3%" : "") + "</small>";
   document.getElementById("pc-ach").classList.toggle("sel", !card);
   document.getElementById("pc-card").classList.toggle("sel", card);
 }
@@ -305,14 +318,15 @@ async function submitProposal() {
         token: TOKEN, program: "lutz",
         territory_name: get("sorg"),
         plan: "market-program",
-        plan_label: "Market Program - $500/mo data & services + postcards $1.20/$1.09 per piece",
+        plan_label: "Market Program - $500/mo data & services + postcards $1.20/$1.09 per piece (est. ~2,000/mo, reconciled to actual)",
         setup_fee: 0, due_now: monthly,
         payment_method: card ? "card" : "ach",
         admin: { name: get("aname"), email: get("aemail") },
         monthly_total: monthly,
         chairs: [],
-        zips_text: "First deployment estimate: " + qty("qnew") + " new-business + " + qty("qref") +
-          " referral = " + q + " pieces @ $" + pieceRate(q).toFixed(2) +
+        zips_text: "Monthly deployment estimate: " + qty("qnew") + " new-business + " + qty("qref") +
+          " referral = " + q + " cards @ $" + pieceRate(q).toFixed(2) +
+          " (billed on estimate, debit/credit to actual mailed)" +
           (get("notes") ? " | OFFER NOTES: " + get("notes") : ""),
         delivery_endpoint: get("delivery"), website: get("website"),
         signer_name: get("sname"), signer_title: get("stitle"), signer_org: get("sorg"),

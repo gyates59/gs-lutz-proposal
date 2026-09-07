@@ -130,10 +130,11 @@
       <div class="lineitem opt" id="li-ring" onclick="toggleRing(event)">
         <input type="checkbox" id="ring" onchange="recalc()">
         <div class="t"><b>Yes &#8212; build the McDowell + Burke expansion</b>
-          <p>4,200 additional oil-heat homes, new prospects only. We build and verify the list, and you
-          review it before anything mails. Priced at the volume tier from your agreement ($1.09 per card
-          at this size), invoiced when it deploys.</p></div>
-        <div class="price">$4,715.34 <small>&#183; its own deployment</small></div>
+          <p>4,200 additional oil-heat homes, new prospects only. <b>The audience build for these counties
+          takes about a week</b>, so placing the order now means we start on it immediately and it mails
+          right behind your first send. Priced at the volume tier from your agreement ($1.09 per card at
+          this size), and you review the list before it mails.</p></div>
+        <div class="price">$4,715.34 <small>&#183; order now, mails when built</small></div>
       </div>
       <label>Other counties you'd like researched or included (optional)</label>
       <input type="text" id="othercounties" placeholder="Henderson, Cleveland, Spartanburg SC&#8230; or leave blank">
@@ -152,8 +153,9 @@
           agreement at the fixed quantities shown: 344 referral cards and 1,600 new-customer cards,
           <b>1,944 cards total for $2,402.78</b> ($1.20 per card plus the 3% card processing addition),
           invoiced on this approval to my selected payment method. If I checked the surrounding-county
-          option, I'm authorizing that expansion at 4,200 cards for $4,715.34, invoiced when its
-          deployment mails; I review that list before it goes out.</span>
+          option, I'm placing that order now: 4,200 cards for $4,715.34, with the audience build
+          beginning immediately on this approval (about a week), and I review that list before it
+          mails.</span>
         </div>
       </div>
 
@@ -206,14 +208,14 @@ async function submitApproval() {
         token: TOKEN, program: "lutz-deploy1",
         territory_name: "Lutz Petroleum - Deployment #1",
         plan: "deployment-1",
-        plan_label: "Deployment #1 approved - 1,944 cards FIXED (344 referral + 1,600 new-customer) = $2,402.78" + (ring ? " + McDowell/Burke expansion AUTHORIZED (4,200 = $4,715.34)" : ""),
+        plan_label: "Deployment #1 approved - 1,944 cards FIXED (344 referral + 1,600 new-customer) = $2,402.78" + (ring ? " + McDowell/Burke expansion ORDERED NOW (4,200 = $4,715.34, ~1wk build)" : ""),
         setup_fee: 0, due_now: 0,
         payment_method: "card",
         admin: { name: get("sname"), email: get("semail") },
         monthly_total: 2402.78,
         chairs: [],
         zips_text: "PROOFS APPROVED (PC-01 New Customer + PC-02 Referral). Deployment #1 FIXED: 344 referral + 1,600 new-customer = 1,944 cards @ $1.20 + 3% card = $2,402.78, invoiced on approval." +
-          (ring ? " EXPANSION OPTION CHECKED: McDowell + Burke authorized FIXED 4,200 @ $1.09 + 3% = $4,715.34, invoiced at its deployment." : " Expansion option not selected.") +
+          (ring ? " EXPANSION ORDERED NOW: McDowell + Burke 4,200 @ $1.09 + 3% = $4,715.34; audience build starts immediately (~1 week); Ryan reviews list before mail." : " Expansion option not selected.") +
           (get("othercounties") ? " OTHER COUNTIES REQUESTED: " + get("othercounties") : ""),
         delivery_endpoint: "", website: "www.lutzpetroleum.com",
         signer_name: get("sname"), signer_title: "Owner", signer_org: "Lutz Petroleum (S & C Fuel Delivery)",

@@ -109,18 +109,16 @@
         <div class="t"><b>Existing customers &#8212; referral card</b>
           <p>Your current active accounts, every one address-verified from the list your office sent.
           Each household gets the Give $50 / Get $100 card with the codes above.</p></div>
-        <div class="price">~344 <small>cards</small></div>
+        <div class="price">344 <small>cards</small></div>
       </div>
       <div class="lineitem locked">
         <input type="checkbox" checked disabled>
         <div class="t"><b>New-customer card &#8212; the oil-heat homes you don't serve yet</b>
-          <p>The balance of the ~1,944 oil and kerosene heated homes across Rutherford and Polk, with your
-          current customers removed so nobody gets the wrong card. Final count verified as the list is
-          locked for the mail house.</p></div>
-        <div class="price">~1,600 <small>cards</small></div>
+          <p>The oil and kerosene heated homes across Rutherford and Polk that you don't serve yet, with your
+          current customers removed so nobody gets the wrong card.</p></div>
+        <div class="price">1,600 <small>cards</small></div>
       </div>
-      <div class="total"><span class="lbl">DEPLOYMENT #1 &#8212; APPROX. TOTAL <span style="font-weight:400;color:#B9C6D8;">&#183; ~1,944 cards @ $1.20 + card processing</span></span><span class="amt" id="d1amt">~$2,403</span></div>
-      <div class="total sub"><span class="lbl">BILLED AT ACTUALS <span style="font-weight:400;color:#5A6675;">&#183; per our agreement</span></span><span class="amt" style="font-size:13px">invoice adjusts to the final send count</span></div>
+      <div class="total"><span class="lbl">DEPLOYMENT #1 &#8212; TOTAL <span style="font-weight:400;color:#B9C6D8;">&#183; 1,944 cards @ $1.20 + card processing</span></span><span class="amt" id="d1amt">$2,402.78</span></div>
 
       <h3>Optional &#8212; extend into the surrounding counties</h3>
       <div class="momentum" style="margin-top:4px">You asked what the adjoining counties look like &#8212; the research
@@ -132,10 +130,10 @@
       <div class="lineitem opt" id="li-ring" onclick="toggleRing(event)">
         <input type="checkbox" id="ring" onchange="recalc()">
         <div class="t"><b>Yes &#8212; build the McDowell + Burke expansion</b>
-          <p>~4,200 additional oil-heat homes, new prospects only. We build and verify the exact list, you
-          approve it before anything mails. Priced at the volume tier from your agreement ($1.09 per card
-          at this size), billed only when it actually deploys.</p></div>
-        <div class="price">~$4,715 <small>approx., adjusted to actual</small></div>
+          <p>4,200 additional oil-heat homes, new prospects only. We build and verify the list, and you
+          review it before anything mails. Priced at the volume tier from your agreement ($1.09 per card
+          at this size), invoiced when it deploys.</p></div>
+        <div class="price">$4,715.34 <small>&#183; its own deployment</small></div>
       </div>
       <label>Other counties you'd like researched or included (optional)</label>
       <input type="text" id="othercounties" placeholder="Henderson, Cleveland, Spartanburg SC&#8230; or leave blank">
@@ -151,18 +149,18 @@
         <div class="authbox">
           <input type="checkbox" id="auth">
           <span>I approve the two card designs shown above and authorize deployment #1 under my existing
-          agreement: approximately 1,944 cards across the two lists at the per-card rates already in place,
-          with the <b>invoice issued at the actual final send quantity</b> to my selected payment method.
-          If I checked the surrounding-county option, I'm authorizing the detailed list build for that
-          expansion; it bills only when its deployment actually mails, and I review it first.</span>
+          agreement at the fixed quantities shown: 344 referral cards and 1,600 new-customer cards,
+          <b>1,944 cards total for $2,402.78</b> ($1.20 per card plus the 3% card processing addition),
+          invoiced on this approval to my selected payment method. If I checked the surrounding-county
+          option, I'm authorizing that expansion at 4,200 cards for $4,715.34, invoiced when its
+          deployment mails; I review that list before it goes out.</span>
         </div>
       </div>
 
       <div class="err" id="err"></div>
       <button class="submit" id="go" onclick="submitApproval()">Approve &amp; Start Deployment #1</button>
-      <div class="terms">Deployment #1 counts shown are the planning quantities from your agreement; the
-      mail-house count at list lock is the billed quantity. Card processing addition applies per your
-      payment election. Design changes requested after approval may adjust the production schedule.
+      <div class="terms">Card processing addition applies per your payment election. Design changes
+      requested after approval may adjust the production schedule.
       Accepted for Groupserv Management: Greg Yates &#183; gyates@groupserv.biz</div>
     </div>
 
@@ -170,7 +168,7 @@
       <div class="big">&#10003;</div>
       <h2>Approved &#8212; deployment #1 is in production.</h2>
       <p><b>What happens next:</b> we lock both lists, schedule your drop with the mail house, and confirm
-      your mail date. Your invoice follows at the actual send quantity.</p>
+      your mail date. Your invoice follows this approval.</p>
       <p>Data finds names. Momentum wins markets.</p>
     </div>
   </div>
@@ -208,14 +206,14 @@ async function submitApproval() {
         token: TOKEN, program: "lutz-deploy1",
         territory_name: "Lutz Petroleum - Deployment #1",
         plan: "deployment-1",
-        plan_label: "Deployment #1 approved - ~1,944 cards (344 referral + ~1,600 new-customer), invoice at actuals" + (ring ? " + McDowell/Burke expansion build AUTHORIZED (~4,200)" : ""),
+        plan_label: "Deployment #1 approved - 1,944 cards FIXED (344 referral + 1,600 new-customer) = $2,402.78" + (ring ? " + McDowell/Burke expansion AUTHORIZED (4,200 = $4,715.34)" : ""),
         setup_fee: 0, due_now: 0,
         payment_method: "card",
         admin: { name: get("sname"), email: get("semail") },
-        monthly_total: 2403,
+        monthly_total: 2402.78,
         chairs: [],
-        zips_text: "PROOFS v2 APPROVED (PC-01 New Customer + PC-02 Referral). Deployment #1: ~344 referral + ~1,600 new-customer = ~1,944 @ $1.20 + 3% card, billed at actual send count." +
-          (ring ? " EXPANSION OPTION CHECKED: McDowell + Burke detailed build authorized (~4,200 @ $1.09, bills at its own deployment)." : " Expansion option not selected.") +
+        zips_text: "PROOFS APPROVED (PC-01 New Customer + PC-02 Referral). Deployment #1 FIXED: 344 referral + 1,600 new-customer = 1,944 cards @ $1.20 + 3% card = $2,402.78, invoiced on approval." +
+          (ring ? " EXPANSION OPTION CHECKED: McDowell + Burke authorized FIXED 4,200 @ $1.09 + 3% = $4,715.34, invoiced at its deployment." : " Expansion option not selected.") +
           (get("othercounties") ? " OTHER COUNTIES REQUESTED: " + get("othercounties") : ""),
         delivery_endpoint: "", website: "www.lutzpetroleum.com",
         signer_name: get("sname"), signer_title: "Owner", signer_org: "Lutz Petroleum (S & C Fuel Delivery)",

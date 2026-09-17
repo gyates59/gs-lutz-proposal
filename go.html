@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Lutz Petroleum &#8212; Deployment #1 Go</title>
+<style>
+  :root { --navy:#0D1B31; --blue:#2169C6; --cyan:#29BAE6; --ink:#1A2330; --mut:#5A6675;
+          --line:#E1E5EA; --wash:#F4F7FA; --warm:#B45309; --warmbg:#FBF0DF; --good:#1F7A3D; }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: "Segoe UI", system-ui, Arial, sans-serif; color: var(--ink); background: #EEF1F5; }
+  .wrap { max-width: 720px; margin: 0 auto; padding: 28px 18px 60px; }
+  .card { background: #fff; border-radius: 14px; box-shadow: 0 2px 14px rgba(13,27,49,.08); padding: 28px 30px; }
+  .head { display: flex; align-items: center; justify-content: space-between; gap: 12px;
+          border-bottom: 3px solid var(--navy); padding-bottom: 12px; flex-wrap: wrap; }
+  .head .brand { font-weight: 800; letter-spacing: .04em; font-size: 18px; color: var(--navy); }
+  .head .brand span { display:block; font-size: 10px; letter-spacing: .18em; color: var(--mut); font-weight: 600; }
+  .head .kicker { text-align: right; }
+  .head .kicker b { display: block; font-size: 11px; letter-spacing: .1em; color: var(--navy); }
+  .head .kicker span { font-size: 9.5px; color: var(--mut); letter-spacing: .06em; }
+  h1 { font-size: 23px; margin: 18px 0 6px; color: var(--navy); }
+  .momentum { background: var(--wash); border-left: 4px solid var(--blue); padding: 12px 16px;
+              font-size: 13.5px; line-height: 1.5; margin: 12px 0 18px; border-radius: 0 8px 8px 0; }
+  .momentum a { color: var(--blue); font-weight: 700; text-decoration: none; }
+  h3 { font-size: 12px; color: var(--blue); letter-spacing: .08em; text-transform: uppercase; margin: 22px 0 10px; }
+  label { display: block; font-size: 12.5px; font-weight: 600; color: var(--navy); margin: 12px 0 4px; }
+  input[type=text], input[type=email], textarea { width: 100%; padding: 9px 12px; border: 1.5px solid var(--line);
+    border-radius: 8px; font-size: 14px; font-family: inherit; background: #FDFEFF; }
+  input:focus, textarea:focus { outline: 2px solid var(--cyan); border-color: var(--blue); }
+  .row2 { display: grid; grid-template-columns: 1fr 1fr; gap: 0 18px; }
+  @media (max-width: 620px) { .row2 { grid-template-columns: 1fr; } }
+  .lineitem { display: flex; align-items: flex-start; gap: 12px; border: 1.5px solid var(--line);
+              border-radius: 10px; padding: 13px 15px; margin-bottom: 10px; }
+  .lineitem.locked { background: var(--wash); }
+  .lineitem input { width: 19px; height: 19px; margin-top: 2px; accent-color: var(--navy); flex: none; }
+  .lineitem .t b { font-size: 14px; color: var(--navy); }
+  .lineitem .t p { font-size: 12px; color: var(--mut); line-height: 1.4; margin-top: 2px; }
+  .lineitem .t p a { color: var(--blue); font-weight: 700; text-decoration: none; }
+  .lineitem .price { margin-left: auto; font-weight: 700; color: var(--navy); white-space: nowrap; font-size: 14px; text-align: right; }
+  .lineitem .price small { font-weight: 400; color: var(--mut); }
+  .lineitem.opt { cursor: pointer; }
+  .lineitem.opt.sel { border-color: var(--blue); background: #F6FAFF; }
+  .total { display: flex; justify-content: space-between; align-items: baseline; background: var(--navy);
+           color: #fff; border-radius: 10px; padding: 14px 18px; margin-top: 14px; }
+  .total .lbl { font-size: 13px; letter-spacing: .04em; }
+  .total .amt { font-size: 22px; font-weight: 800; }
+  .total .amt small { font-size: 12px; font-weight: 400; color: #B9C6D8; }
+  .sigblock { background: var(--wash); border-radius: 10px; padding: 16px 18px; margin-top: 10px; }
+  .authbox { display: flex; gap: 10px; align-items: flex-start; margin-top: 12px; font-size: 12.5px; line-height: 1.5; }
+  .authbox input { width: 20px; height: 20px; accent-color: var(--navy); flex: none; margin-top: 1px; }
+  .siginput { font-family: "Segoe Script", "Brush Script MT", cursive; font-size: 20px !important; }
+  .terms { font-size: 11px; color: var(--mut); line-height: 1.5; margin-top: 16px; }
+  .submit { width: 100%; background: var(--navy); color: #fff; border: none; border-radius: 10px;
+            padding: 15px; font-size: 16px; font-weight: 700; cursor: pointer; margin-top: 18px; font-family: inherit; }
+  .submit:hover { background: #16294a; }
+  .submit:disabled { background: #8FA1B8; cursor: wait; }
+  .err { color: #B00020; font-size: 13px; margin-top: 10px; display: none; }
+  #done { display: none; text-align: center; padding: 40px 20px; }
+  #done .big { font-size: 46px; }
+  #done h2 { color: var(--navy); margin: 10px 0 8px; }
+  #done p { color: var(--mut); font-size: 14.5px; line-height: 1.6; max-width: 480px; margin: 0 auto 8px; }
+  .foot { text-align: center; font-size: 11px; color: var(--mut); margin-top: 18px; letter-spacing: .04em; }
+  .foot b { color: var(--navy); }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="card">
+    <div class="head">
+      <div class="brand">GROUPSERV<span>MANAGEMENT</span></div>
+      <div class="kicker"><b>LUTZ PETROLEUM MARKET PROGRAM</b><span>DEPLOYMENT #1 &#8212; GO AUTHORIZATION</span></div>
+    </div>
+
+    <div id="form">
+      <h1>Everything is staged. Give the go.</h1>
+      <div class="momentum"><b>The cards are final and the lists are ready.</b> You have both proofs in hand
+      (they're linked below if you want another look). This page does one thing: it fires deployment #1.
+      Sign it and we lock print, confirm your drop date, and mail on your schedule.</div>
+
+      <h3>Decision 1 &#8212; fire deployment #1</h3>
+      <div class="lineitem locked">
+        <input type="checkbox" checked disabled>
+        <div class="t"><b>GO on deployment #1 &#8212; both cards, as proofed</b>
+          <p>344 referral cards to your current customers plus 1,600 new-customer cards across Rutherford
+          and Polk, fixed quantities, invoiced on this approval.
+          Proofs: <a href="proof-pc01-new-customer-v2.pdf" target="_blank">New Customer card</a> &#183;
+          <a href="proof-pc02-referral-v2.pdf" target="_blank">Referral card</a></p></div>
+        <div class="price">1,944 cards<br><small>$2,402.78 flat</small></div>
+      </div>
+
+      <h3>Decision 2 &#8212; optional: add McDowell + Burke</h3>
+      <div class="lineitem opt" id="li-ring" onclick="toggleRing(event)">
+        <input type="checkbox" id="ring" onchange="recalc()">
+        <div class="t"><b>Yes &#8212; order the McDowell + Burke expansion</b>
+          <p>4,200 more homes identified the same way, new prospects only, at your volume tier ($1.09 per
+          card at this size). The McDowell audience work is already complete, Burke finishes within about
+          a week, and it mails right behind your first send. You review every list before it mails.</p></div>
+        <div class="price">4,200 cards<br><small>$4,715.34 &#183; order now</small></div>
+      </div>
+
+      <div class="total"><span class="lbl">TOTAL ON THIS AUTHORIZATION</span><span class="amt" id="totamt">$2,402.78</span></div>
+
+      <h3>Sign the go</h3>
+      <div class="sigblock">
+        <div class="row2">
+          <div><label>Your name <span style="color:#B00020">*</span></label><input type="text" id="sname" value="Ryan Claterbaugh"></div>
+          <div><label>Email <span style="color:#B00020">*</span></label><input type="email" id="semail" value="rc@lutzpetroleum.com"></div>
+        </div>
+        <label>Type your full name as your signature <span style="color:#B00020">*</span></label>
+        <input type="text" id="sig" class="siginput" placeholder="Signature">
+        <div class="authbox">
+          <input type="checkbox" id="auth">
+          <span>I approve both card designs as proofed and authorize deployment #1 under my existing
+          agreement at the fixed quantities shown: 344 referral cards and 1,600 new-customer cards,
+          <b>1,944 cards total for $2,402.78</b> ($1.20 per card plus the 3% card processing addition),
+          invoiced on this approval to my selected payment method. If I checked the McDowell + Burke
+          option, I'm placing that order now as well: <b>4,200 cards for $4,715.34</b>, mailing behind my
+          first send, and I review that list before it mails.</span>
+        </div>
+      </div>
+
+      <div class="err" id="err"></div>
+      <button class="submit" id="go" onclick="submitApproval()">GO &#8212; Start Deployment #1</button>
+      <div class="terms">Card processing addition applies per your payment election. Design changes
+      requested after this authorization may adjust the production schedule.
+      Accepted for Groupserv Management: Greg Yates &#183; gyates@groupserv.biz</div>
+    </div>
+
+    <div id="done">
+      <div class="big">&#10003;</div>
+      <h2>GO received &#8212; deployment #1 is in production.</h2>
+      <p><b>What happens next:</b> we lock the lists, schedule your drop with the mail house, and confirm
+      your mail date. Your invoice follows this authorization.</p>
+      <p>Data finds names. Momentum wins markets.</p>
+    </div>
+  </div>
+  <div class="foot"><b>GROUPSERV</b> &#183; Data finds names. Momentum wins markets.</div>
+</div>
+
+<script>
+const ENDPOINT = "https://pboxaamvtrgwnhgfccbv.supabase.co/functions/v1/proposal-submit";
+const TOKEN = "gsm-proposal-2026";
+
+function toggleRing(ev) {
+  if (ev.target.id !== "ring") {
+    const cb = document.getElementById("ring");
+    cb.checked = !cb.checked;
+  }
+  recalc();
+}
+function recalc() {
+  const on = document.getElementById("ring").checked;
+  document.getElementById("li-ring").classList.toggle("sel", on);
+  document.getElementById("totamt").textContent = on ? "$7,118.12" : "$2,402.78";
+}
+
+async function submitApproval() {
+  const err = document.getElementById("err");
+  err.style.display = "none";
+  const get = id => document.getElementById(id).value.trim();
+  if (!get("sname") || !get("semail")) return showErr("Please enter your name and email.");
+  if (!get("sig")) return showErr("Please type your name as your signature.");
+  if (!document.getElementById("auth").checked) return showErr("Please check the authorization box.");
+  const ring = document.getElementById("ring").checked;
+  const btn = document.getElementById("go");
+  btn.disabled = true; btn.textContent = "Submitting…";
+  try {
+    const res = await fetch(ENDPOINT, { method: "POST", headers: { "content-type": "application/json" },
+      body: JSON.stringify({
+        token: TOKEN, program: "lutz-go1",
+        territory_name: "Lutz Petroleum - Deployment #1 GO",
+        plan: "deployment-1-go",
+        plan_label: "GO signed - Deployment #1 FIXED 1,944 cards (344 referral + 1,600 new-customer) = $2,402.78" + (ring ? " + McDowell/Burke expansion ORDERED (4,200 = $4,715.34, mails behind first send)" : ""),
+        setup_fee: 0, due_now: 0,
+        payment_method: "card",
+        admin: { name: get("sname"), email: get("semail") },
+        monthly_total: 2402.78,
+        chairs: [],
+        zips_text: "GO AUTHORIZATION (lean page). Cards approved as proofed (PC-01 New Customer + PC-02 Referral). Deployment #1 FIXED: 344 referral + 1,600 new-customer = 1,944 cards @ $1.20 + 3% card = $2,402.78, invoiced on this GO." +
+          (ring ? " EXPANSION ORDERED: McDowell + Burke 4,200 @ $1.09 + 3% = $4,715.34; McDowell audience complete, Burke ~1 week; mails behind first send; Ryan reviews list before mail." : " Expansion option not selected."),
+        delivery_endpoint: "", website: "www.lutzpetroleum.com",
+        signer_name: get("sname"), signer_title: "Owner", signer_org: "Lutz Petroleum (S & C Fuel Delivery)",
+        signer_email: get("semail"), signature_typed: get("sig"), authorized: true
+      })});
+    const j = await res.json();
+    if (!res.ok || !j.ok) throw new Error(j.error || "submit failed");
+    document.getElementById("form").style.display = "none";
+    document.getElementById("done").style.display = "block";
+    window.scrollTo({ top: 0 });
+  } catch (e) {
+    btn.disabled = false; btn.textContent = "GO — Start Deployment #1";
+    showErr("Something went wrong sending this — please try again, or email gyates@groupserv.biz.");
+  }
+}
+function showErr(m) { const e = document.getElementById("err"); e.textContent = m; e.style.display = "block"; }
+</script>
+</body>
+</html>

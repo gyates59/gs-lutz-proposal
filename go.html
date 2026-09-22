@@ -116,21 +116,32 @@
         </object>
       </div>
 
-      <h3>What this go fires</h3>
+      <h3>Three ways to fire it &#8212; your call</h3>
       <div class="lineitem locked">
         <input type="checkbox" checked disabled>
-        <div class="t"><b>Deployment #1 &#8212; both cards, as shown above</b><span class="inc">LIST VERIFIED</span>
+        <div class="t"><b>Option 1 &#8212; the original deployment #1</b><span class="inc">INCLUDED IN THIS GO</span>
           <p>344 referral cards to your current customers plus 1,600 new-customer cards across Rutherford
-          and Polk &#8212; fixed quantities at your $1.20 tier, invoiced on this approval. The new-customer side
-          is drawn from verified county heating records, your current customers removed.</p></div>
+          and Polk &#8212; the send we scoped together, fixed quantities at your $1.20 tier, invoiced on this
+          approval. The new-customer side is drawn from verified county heating records, your current
+          customers removed.</p></div>
         <div class="price">1,944 cards<br><small id="d1amt">$2,402.78</small></div>
       </div>
-      <div class="lineitem opt" id="li-ring" onclick="toggleRing(event)">
+      <div class="lineitem opt" id="li-up" onclick="toggleOpt(event,'up')">
+        <input type="checkbox" id="up" onchange="recalc()">
+        <div class="t"><b>Option 2 &#8212; upgrade to the full verified universe, same two counties</b>
+          <p>After a lot of digging with the county we identified <b>1,932 more verified oil and kerosene
+          heated homes</b> in Rutherford and Polk beyond the original send &#8212; nearly double the audience,
+          every home from the same county heating records. Checking this upgrades deployment #1 to
+          <b>3,876 cards</b>, and the bigger run drops your rate to the <b>$1.09 volume tier</b>.</p></div>
+        <div class="price">3,876 cards<br><small id="upamt">$4,351.59</small></div>
+      </div>
+      <div class="lineitem opt" id="li-ring" onclick="toggleOpt(event,'ring')">
         <input type="checkbox" id="ring" onchange="recalc()">
-        <div class="t"><b>Optional &#8212; add the McDowell + Burke expansion</b>
-          <p>4,200 more homes identified the same way, new prospects only, at your volume tier ($1.09 per
-          card at this size). The McDowell audience work is already complete, Burke finishes within about
-          a week, and it mails right behind your first send. You review every list before it mails.</p></div>
+        <div class="t"><b>Option 3 &#8212; add the McDowell + Burke expansion counties</b>
+          <p>4,200 more homes identified the same way in the two counties directly north, new prospects
+          only, at the $1.09 volume tier. The McDowell audience work is already complete, Burke finishes
+          within about a week, and it mails right behind your first send. You review every list before
+          it mails.</p></div>
         <div class="price">4,200 cards<br><small id="rgamt">$4,715.34</small></div>
       </div>
 
@@ -165,12 +176,13 @@
         <div class="authbox">
           <input type="checkbox" id="auth">
           <span>I approve both card designs shown above as final and authorize deployment #1 under my
-          existing agreement at the fixed quantities shown: 344 referral cards and 1,600 new-customer
-          cards, <b>1,944 cards total at $1.20 per card</b> &#8212; $2,332.80 by bank transfer, or $2,402.78
-          with the 3% credit card addition, per the payment method I selected above &#8212; invoiced on this
-          approval. If I checked the McDowell + Burke option, I'm placing that order now as well:
-          <b>4,200 cards at $1.09 per card</b> ($4,578.00 by bank transfer, or $4,715.34 by card), mailing
-          behind my first send, and I review that list before it mails.</span>
+          existing agreement at the fixed quantities I selected above, invoiced on this approval at the
+          payment method I chose (credit card carries the 3% processing addition):
+          <b>Option 1 &#8212; 1,944 cards at $1.20</b> ($2,332.80 ACH / $2,402.78 card); if I checked
+          <b>Option 2</b>, deployment #1 upgrades to <b>3,876 cards at $1.09</b> ($4,224.84 ACH /
+          $4,351.59 card) in place of Option 1; if I checked <b>Option 3</b>, I'm also ordering the
+          McDowell + Burke expansion now: <b>4,200 cards at $1.09</b> ($4,578.00 ACH / $4,715.34 card),
+          mailing behind my first send, and I review every list before it mails.</span>
         </div>
       </div>
 
@@ -195,36 +207,38 @@
 <script>
 const ENDPOINT = "https://pboxaamvtrgwnhgfccbv.supabase.co/functions/v1/proposal-submit";
 const TOKEN = "gsm-proposal-2026";
-const D1_ACH = 2332.80, RING_ACH = 4578.00;
+const D1_ACH = 2332.80, UP_ACH = 4224.84, RING_ACH = 4578.00;
 
 function isCard() { return document.querySelector('input[name=pay]:checked').value === "card"; }
 function money(v) { return "$" + v.toLocaleString("en-US", {minimumFractionDigits: 2, maximumFractionDigits: 2}); }
+function r2(v) { return Math.round(v * 100) / 100; }
 function amounts() {
   const card = isCard();
   const m = card ? 1.03 : 1.0;
-  return { card,
-    d1: Math.round(D1_ACH * m * 100) / 100,
-    ring: Math.round(RING_ACH * m * 100) / 100 };
+  return { card, d1: r2(D1_ACH * m), up: r2(UP_ACH * m), ring: r2(RING_ACH * m) };
 }
-function toggleRing(ev) {
-  if (ev.target.id !== "ring" && ev.target.tagName !== "INPUT") {
-    const cb = document.getElementById("ring");
+function toggleOpt(ev, id) {
+  if (ev.target.tagName !== "INPUT") {
+    const cb = document.getElementById(id);
     cb.checked = !cb.checked;
   }
   recalc();
 }
 function recalc() {
   const a = amounts();
-  const on = document.getElementById("ring").checked;
-  document.getElementById("li-ring").classList.toggle("sel", on);
+  const up = document.getElementById("up").checked;
+  const ring = document.getElementById("ring").checked;
+  document.getElementById("li-up").classList.toggle("sel", up);
+  document.getElementById("li-ring").classList.toggle("sel", ring);
   document.getElementById("pc-ach").classList.toggle("sel", !a.card);
   document.getElementById("pc-card").classList.toggle("sel", a.card);
   document.getElementById("d1amt").textContent = money(a.d1);
+  document.getElementById("upamt").textContent = money(a.up);
   document.getElementById("rgamt").textContent = money(a.ring);
-  const tot = on ? a.d1 + a.ring : a.d1;
-  document.getElementById("totamt").textContent = money(Math.round(tot * 100) / 100);
-  document.getElementById("totnote").innerHTML = "&#183; deployment #1" + (on ? " + expansion" : "") +
-    (a.card ? " &#183; incl. 3% card" : " &#183; ACH, no fee");
+  const tot = (up ? a.up : a.d1) + (ring ? a.ring : 0);
+  document.getElementById("totamt").textContent = money(r2(tot));
+  document.getElementById("totnote").innerHTML = "&#183; " + (up ? "deployment #1 upgraded to 3,876" : "deployment #1, 1,944 cards") +
+    (ring ? " + expansion" : "") + (a.card ? " &#183; incl. 3% card" : " &#183; ACH, no fee");
 }
 recalc();
 
@@ -236,7 +250,11 @@ async function submitApproval() {
   if (!get("sig")) return showErr("Please type your name as your signature.");
   if (!document.getElementById("auth").checked) return showErr("Please check the authorization box.");
   const a = amounts();
+  const up = document.getElementById("up").checked;
   const ring = document.getElementById("ring").checked;
+  const d1total = up ? a.up : a.d1;
+  const d1desc = up ? "UPGRADED 3,876 cards (344 referral + 3,532 new-customer, full verified universe) @ $1.09 = " + money(a.up)
+                    : "1,944 cards (344 referral + 1,600 new-customer) @ $1.20 = " + money(a.d1);
   const btn = document.getElementById("go");
   btn.disabled = true; btn.textContent = "Submitting…";
   try {
@@ -245,14 +263,15 @@ async function submitApproval() {
         token: TOKEN, program: "lutz-go1",
         territory_name: "Lutz Petroleum - Deployment #1 GO",
         plan: "deployment-1-go",
-        plan_label: "GO signed - Deployment #1 FIXED 1,944 cards = " + money(a.d1) + " (" + (a.card ? "CARD +3%" : "ACH") + ")" +
+        plan_label: "GO signed - Deployment #1 " + d1desc + " (" + (a.card ? "CARD +3%" : "ACH") + ")" +
           (ring ? " + McDowell/Burke expansion ORDERED (4,200 = " + money(a.ring) + ")" : ""),
-        setup_fee: 0, due_now: a.d1 + (ring ? a.ring : 0),
+        setup_fee: 0, due_now: r2(d1total + (ring ? a.ring : 0)),
         payment_method: a.card ? "card" : "ach",
         admin: { name: get("sname"), email: get("semail") },
-        monthly_total: a.d1,
+        monthly_total: d1total,
         chairs: [],
-        zips_text: "FINAL GO (branded page). Cards approved as FINAL v4 (Ryan's changes in: & + 97 years). Deployment #1 FIXED: 344 referral + 1,600 new-customer = 1,944 cards @ $1.20 = " + money(a.d1) + " (" + (a.card ? "card incl. 3%" : "ACH") + "), invoiced on this GO. New-customer list = county-verified heating records." +
+        zips_text: "FINAL GO (3-option page). Cards approved as FINAL v4 (Ryan's changes in: & + 97 years). Deployment #1: " + d1desc +
+          " (" + (a.card ? "card incl. 3%" : "ACH") + "), invoiced on this GO. New-customer list = county-verified heating records." +
           (ring ? " EXPANSION ORDERED: McDowell + Burke 4,200 @ $1.09 = " + money(a.ring) + "; McDowell audience complete, Burke ~1 week; mails behind first send; Ryan reviews list before mail." : " Expansion option not selected."),
         delivery_endpoint: "", website: "www.lutzpetroleum.com",
         signer_name: get("sname"), signer_title: "Owner", signer_org: "Lutz Petroleum (S & C Fuel Delivery)",

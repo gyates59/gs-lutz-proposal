@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Lutz Petroleum &#8212; Queue Drops 2 &amp; 3</title>
+<style>
+  :root { --navy:#0D1B31; --blue:#2169C6; --cyan:#29BAE6; --ink:#1A2330; --mut:#5A6675;
+          --line:#E1E5EA; --wash:#F4F7FA; --good:#1F7A3D; }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: "Segoe UI", system-ui, Arial, sans-serif; color: var(--ink); background: #EEF1F5; }
+  .wrap { max-width: 780px; margin: 0 auto; padding: 28px 18px 60px; }
+  .card { background: #fff; border-radius: 14px; box-shadow: 0 2px 14px rgba(13,27,49,.08); padding: 28px 30px; }
+  .head { display: flex; align-items: center; justify-content: space-between; gap: 12px;
+          border-bottom: 3px solid var(--navy); padding-bottom: 12px; flex-wrap: wrap; }
+  .head .brand { font-weight: 800; letter-spacing: .04em; font-size: 18px; color: var(--navy); }
+  .head .brand span { display:block; font-size: 10px; letter-spacing: .18em; color: var(--mut); font-weight: 600; }
+  .head .kicker { text-align: right; }
+  .head .kicker b { display: block; font-size: 11px; letter-spacing: .1em; color: var(--navy); }
+  .head .kicker span { font-size: 9.5px; color: var(--mut); letter-spacing: .06em; }
+  h1 { font-size: 23px; margin: 18px 0 6px; color: var(--navy); }
+  .momentum { background: var(--wash); border-left: 4px solid var(--blue); padding: 12px 16px;
+              font-size: 13.5px; line-height: 1.5; margin: 12px 0 18px; border-radius: 0 8px 8px 0; }
+  h3 { font-size: 12px; color: var(--blue); letter-spacing: .08em; text-transform: uppercase; margin: 22px 0 10px; }
+  label { display: block; font-size: 12.5px; font-weight: 600; color: var(--navy); margin: 12px 0 4px; }
+  input[type=text], input[type=email] { width: 100%; padding: 9px 12px; border: 1.5px solid var(--line);
+    border-radius: 8px; font-size: 14px; font-family: inherit; background: #FDFEFF; }
+  input:focus { outline: 2px solid var(--cyan); border-color: var(--blue); }
+  .row2 { display: grid; grid-template-columns: 1fr 1fr; gap: 0 18px; }
+  @media (max-width: 620px) { .row2 { grid-template-columns: 1fr; } .payrow { grid-template-columns: 1fr !important; } }
+  .lineitem { display: flex; align-items: flex-start; gap: 12px; border: 1.5px solid var(--line);
+              border-radius: 10px; padding: 13px 15px; margin-bottom: 10px; }
+  .lineitem.locked { background: var(--wash); }
+  .lineitem input { width: 19px; height: 19px; margin-top: 2px; accent-color: var(--navy); flex: none; }
+  .lineitem .t b { font-size: 14px; color: var(--navy); }
+  .lineitem .t .inc { font-size: 9px; font-weight: 700; letter-spacing: .06em; color: var(--good);
+                      background: #E7F4EC; border-radius: 4px; padding: 2px 6px; margin-left: 6px; vertical-align: 2px; }
+  .lineitem .t p { font-size: 12px; color: var(--mut); line-height: 1.4; margin-top: 2px; }
+  .lineitem .price { margin-left: auto; font-weight: 700; color: var(--navy); white-space: nowrap; font-size: 14px; text-align: right; }
+  .lineitem .price small { font-weight: 400; color: var(--mut); }
+  .payrow { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  .paychoice { border: 1.5px solid var(--line); border-radius: 10px; padding: 12px 14px; cursor: pointer; display: flex; gap: 10px; align-items: flex-start; }
+  .paychoice input { width: 18px; height: 18px; margin-top: 1px; accent-color: var(--navy); }
+  .paychoice b { font-size: 13.5px; color: var(--navy); display: block; }
+  .paychoice span { font-size: 11.5px; color: var(--mut); }
+  .paychoice.sel { border-color: var(--blue); background: #F6FAFF; }
+  .choicegrid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+  @media (max-width: 620px) { .choicegrid { grid-template-columns: 1fr; } }
+  .total { display: flex; justify-content: space-between; align-items: baseline; background: var(--navy);
+           color: #fff; border-radius: 10px; padding: 14px 18px; margin-top: 14px; }
+  .total .lbl { font-size: 13px; letter-spacing: .04em; }
+  .total .amt { font-size: 24px; font-weight: 800; }
+  .total.sub { background: var(--wash); color: var(--navy); padding: 11px 18px; margin-top: 8px; }
+  .total.sub .amt { font-size: 16px; }
+  .scope { background: #FBFCFE; border: 1.5px solid var(--line); border-radius: 10px; padding: 14px 16px; font-size: 12.5px; line-height: 1.5; }
+  .scope b { color: var(--navy); }
+  .scope ul { margin: 6px 0 6px 18px; }
+  .scope li { margin-bottom: 3px; color: var(--mut); }
+  .scope li b { color: var(--navy); }
+  .sigblock { background: var(--wash); border-radius: 10px; padding: 16px 18px; margin-top: 10px; }
+  .authbox { display: flex; gap: 10px; align-items: flex-start; margin-top: 12px; font-size: 12.5px; line-height: 1.5; }
+  .authbox input { width: 20px; height: 20px; accent-color: var(--navy); flex: none; margin-top: 1px; }
+  .siginput { font-family: "Segoe Script", "Brush Script MT", cursive; font-size: 20px !important; }
+  .terms { font-size: 11px; color: var(--mut); line-height: 1.5; margin-top: 16px; }
+  .submit { width: 100%; background: var(--navy); color: #fff; border: none; border-radius: 10px;
+            padding: 15px; font-size: 16px; font-weight: 700; cursor: pointer; margin-top: 18px; font-family: inherit; }
+  .submit:hover { background: #16294a; }
+  .submit:disabled { background: #8FA1B8; cursor: wait; }
+  .err { color: #B00020; font-size: 13px; margin-top: 10px; display: none; }
+  #done { display: none; text-align: center; padding: 40px 20px; }
+  #done .big { font-size: 46px; }
+  #done h2 { color: var(--navy); margin: 10px 0 8px; }
+  #done p { color: var(--mut); font-size: 14.5px; line-height: 1.6; max-width: 480px; margin: 0 auto 8px; }
+  .foot { text-align: center; font-size: 11px; color: var(--mut); margin-top: 18px; letter-spacing: .04em; }
+  .foot b { color: var(--navy); }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="card">
+    <div class="head">
+      <div class="brand">GROUPSERV<span>MANAGEMENT</span></div>
+      <div class="kicker"><b>THE LUTZ PETROLEUM MARKET PROGRAM</b><span>POWERED BY THE GROUPSERV MOMENTUM ENGINE &#183; DEPLOYMENTS #2 &amp; #3</span></div>
+    </div>
+
+    <div id="form">
+      <h1>Queue drops 2 and 3.</h1>
+      <div class="momentum"><b>You asked to pay for the next two drops and have them staged &#8212; here's the
+      paperwork.</b> Same play as your first send: <b>3,876 cards per drop</b> (344 referral + 3,532
+      new-customer) to the same county-verified oil and kerosene homes, at your $1.09 volume rate.
+      Repetition is where direct mail earns its keep &#8212; the second and third landing is when the phone
+      habit forms. Before every drop we refresh the list: move-outs culled, new verified homes added,
+      new customers moved to the referral track. Pick your spacing and your creative below, sign once,
+      and both drops go in the queue.</div>
+
+      <h3>What you're queueing</h3>
+      <div class="lineitem locked">
+        <input type="checkbox" checked disabled>
+        <div class="t"><b>Deployments #2 and #3 &#8212; two full drops</b><span class="inc">LIST REFRESHED EACH DROP</span>
+          <p>3,876 cards per drop (344 referral + 3,532 new-customer, county-verified audience,
+          Rutherford + Polk) at your $1.09 volume tier. One mailer per home, per drop. Completes the
+          three-drop program from your agreement.</p></div>
+        <div class="price">2 &#215; 3,876 cards<br><small id="dropamt">$4,351.59 per drop</small></div>
+      </div>
+
+      <h3>How far apart do you want them?</h3>
+      <div class="choicegrid">
+        <label class="paychoice" id="sp-2"><input type="radio" name="spacing" value="2 weeks" onchange="recalc()">
+          <span><b>Every 2 weeks</b><span>The classic season cadence &#8212; steady pressure as temps fall</span></span></label>
+        <label class="paychoice sel" id="sp-3"><input type="radio" name="spacing" value="3 weeks" checked onchange="recalc()">
+          <span><b>Every 3 weeks</b><span>A touch more breathing room between landings</span></span></label>
+        <label class="paychoice" id="sp-4"><input type="radio" name="spacing" value="4 weeks" onchange="recalc()">
+          <span><b>Every 4 weeks</b><span>Monthly rhythm through the season</span></span></label>
+        <label class="paychoice" id="sp-call"><input type="radio" name="spacing" value="Greg calls me before each drop" onchange="recalc()">
+          <span><b>Call me before each one</b><span>You and Greg set each date by phone &#8212; weather's call</span></span></label>
+      </div>
+
+      <h3>Same cards, or a fresh look?</h3>
+      <div class="choicegrid">
+        <label class="paychoice sel" id="ds-same"><input type="radio" name="design" value="same" checked onchange="recalc()">
+          <span><b>Run the same cards</b><span>Recognition compounds &#8212; the third sighting is when they call</span></span></label>
+        <label class="paychoice" id="ds-new"><input type="radio" name="design" value="new" onchange="recalc()">
+          <span><b>Fresh design for the later drops</b><span>Included in your program, no extra cost &#8212; you approve proofs before anything prints</span></span></label>
+      </div>
+
+      <h3>Payment method</h3>
+      <div class="payrow">
+        <label class="paychoice" id="pc-ach"><input type="radio" name="pay" value="ach" onchange="recalc()">
+          <span><b>Bank transfer (ACH)</b><span>Included &#8212; no processing fee</span></span></label>
+        <label class="paychoice sel" id="pc-card"><input type="radio" name="pay" value="card" checked onchange="recalc()">
+          <span><b>Credit card</b><span>+3% processing addition &#183; your current election</span></span></label>
+      </div>
+      <div class="total"><span class="lbl">TOTAL &#8212; DROPS 2 &amp; 3 <span style="font-weight:400;color:#B9C6D8;" id="totnote">&#183; incl. 3% card</span></span><span class="amt" id="totamt">$8,703.18</span></div>
+      <div class="total sub"><span class="lbl">YOUR FULL 3-DROP CAMPAIGN <span style="font-weight:400;color:#5A6675;">&#183; incl. drop #1 already invoiced</span></span><span class="amt" id="campamt">$13,054.77</span></div>
+
+      <h3>What happens after you sign</h3>
+      <div class="scope">
+        <ul>
+          <li><b>1. One invoice for both drops arrives by email</b> &#8212; secure link, the amount shown here.</li>
+          <li><b>2. Both drops go on the calendar</b> at the spacing you picked, counted from drop #1's mail date.</li>
+          <li><b>3. If you chose a fresh design</b>, proofs come to you for approval well before print.</li>
+          <li><b>4. Before every drop</b> the list refreshes and you get the drop confirmation.</li>
+        </ul>
+      </div>
+
+      <h3>Sign the queue order</h3>
+      <div class="sigblock">
+        <div class="row2">
+          <div><label>Your name <span style="color:#B00020">*</span></label><input type="text" id="sname" value="Ryan Claterbaugh"></div>
+          <div><label>Email <span style="color:#B00020">*</span></label><input type="email" id="semail" value="rc@lutzpetroleum.com"></div>
+        </div>
+        <label>Type your full name as your signature <span style="color:#B00020">*</span></label>
+        <input type="text" id="sig" class="siginput" placeholder="Signature">
+        <div class="authbox">
+          <input type="checkbox" id="auth">
+          <span>I authorize deployments #2 and #3 under my existing agreement at the fixed quantity of
+          <b>3,876 cards per drop at $1.09 per card</b> &#8212; $4,224.84 per drop by bank transfer or
+          $4,351.59 per drop with the 3% credit card addition, per the payment method I selected above
+          (two drops: $8,449.68 ACH / $8,703.18 card) &#8212; invoiced together on this order. Drops are
+          scheduled at the spacing I selected, counted from deployment #1's mail date, and I may adjust
+          any drop date by request before it prints. Creative follows my selection above; a fresh design,
+          if chosen, is included in my program and I approve proofs before print.</span>
+        </div>
+      </div>
+
+      <div class="err" id="err"></div>
+      <button class="submit" id="go" onclick="submitQueue()">Queue Drops 2 &amp; 3</button>
+      <div class="terms">Card processing addition applies only when credit card is selected. List refresh
+      before each drop is included in the management &amp; research base.
+      Accepted for Groupserv Management: Greg Yates &#183; gyates@groupserv.biz</div>
+    </div>
+
+    <div id="done">
+      <div class="big">&#10003;</div>
+      <h2>Queued &#8212; your season is booked.</h2>
+      <p><b>What happens next:</b> one invoice for both drops arrives by secure link, the calendar locks
+      at your spacing, and every drop gets a confirmation before it mails.</p>
+      <p>Data finds names. Momentum wins markets.</p>
+    </div>
+  </div>
+  <div class="foot"><b>GROUPSERV</b> &#183; Data finds names. Momentum wins markets.</div>
+</div>
+
+<script>
+const ENDPOINT = "https://pboxaamvtrgwnhgfccbv.supabase.co/functions/v1/proposal-submit";
+const TOKEN = "gsm-proposal-2026";
+const DROP_ACH = 4224.84, D1_CARD = 4351.59, D1_ACH = 4224.84;
+
+function isCard() { return document.querySelector('input[name=pay]:checked').value === "card"; }
+function spacing() { return document.querySelector('input[name=spacing]:checked').value; }
+function design() { return document.querySelector('input[name=design]:checked').value; }
+function money(v) { return "$" + v.toLocaleString("en-US", {minimumFractionDigits: 2, maximumFractionDigits: 2}); }
+function r2(v) { return Math.round(v * 100) / 100; }
+function perDrop() { return isCard() ? r2(DROP_ACH * 1.03) : DROP_ACH; }
+
+function recalc() {
+  const card = isCard();
+  const pd = perDrop();
+  const two = r2(pd * 2);
+  const camp = r2(two + (card ? D1_CARD : D1_ACH));
+  document.getElementById("dropamt").textContent = money(pd) + " per drop";
+  document.getElementById("totamt").textContent = money(two);
+  document.getElementById("campamt").textContent = money(camp);
+  document.getElementById("totnote").innerHTML = card ? "&#183; incl. 3% card" : "&#183; ACH, no fee";
+  document.getElementById("pc-ach").classList.toggle("sel", !card);
+  document.getElementById("pc-card").classList.toggle("sel", card);
+  for (const id of ["sp-2","sp-3","sp-4","sp-call"]) document.getElementById(id).classList.toggle("sel", document.getElementById(id).querySelector("input").checked);
+  document.getElementById("ds-same").classList.toggle("sel", design() === "same");
+  document.getElementById("ds-new").classList.toggle("sel", design() === "new");
+}
+recalc();
+
+async function submitQueue() {
+  const err = document.getElementById("err");
+  err.style.display = "none";
+  const get = id => document.getElementById(id).value.trim();
+  if (!get("sname") || !get("semail")) return showErr("Please enter your name and email.");
+  if (!get("sig")) return showErr("Please type your name as your signature.");
+  if (!document.getElementById("auth").checked) return showErr("Please check the authorization box.");
+  const card = isCard();
+  const pd = perDrop();
+  const two = r2(pd * 2);
+  const btn = document.getElementById("go");
+  btn.disabled = true; btn.textContent = "Submitting…";
+  try {
+    const res = await fetch(ENDPOINT, { method: "POST", headers: { "content-type": "application/json" },
+      body: JSON.stringify({
+        token: TOKEN, program: "lutz-drops23",
+        territory_name: "Lutz Petroleum - Deployments #2 & #3 Queue",
+        plan: "drops-2-3",
+        plan_label: "Drops 2 & 3 QUEUED - 2 x 3,876 cards @ $1.09 = " + money(two) + " (" + (card ? "CARD +3%" : "ACH") + ") | spacing: " + spacing() + " | creative: " + (design() === "same" ? "same cards" : "FRESH DESIGN for later drops"),
+        setup_fee: 0, due_now: two,
+        payment_method: card ? "card" : "ach",
+        admin: { name: get("sname"), email: get("semail") },
+        monthly_total: two,
+        chairs: [],
+        zips_text: "DROPS 2 & 3 QUEUE ORDER. 2 x 3,876 cards (344 referral + 3,532 new-customer, county-verified, list refreshed each drop) @ $1.09 = " + money(pd) + " per drop, " + money(two) + " total (" + (card ? "card incl. 3%" : "ACH") + "), one invoice on this order. SPACING: " + spacing() + " (from drop #1 mail date). CREATIVE: " + (design() === "same" ? "same cards all drops" : "FRESH DESIGN for drops 2-3, included, proofs to approve before print") + ". Full 3-drop campaign incl. drop #1: " + money(r2(two + (card ? D1_CARD : D1_ACH))) + ".",
+        delivery_endpoint: "", website: "www.lutzpetroleum.com",
+        signer_name: get("sname"), signer_title: "Owner", signer_org: "Lutz Petroleum (S & C Fuel Delivery)",
+        signer_email: get("semail"), signature_typed: get("sig"), authorized: true
+      })});
+    const j = await res.json();
+    if (!res.ok || !j.ok) throw new Error(j.error || "submit failed");
+    document.getElementById("form").style.display = "none";
+    document.getElementById("done").style.display = "block";
+    window.scrollTo({ top: 0 });
+  } catch (e) {
+    btn.disabled = false; btn.textContent = "Queue Drops 2 & 3";
+    showErr("Something went wrong sending this — please try again, or email gyates@groupserv.biz.");
+  }
+}
+function showErr(m) { const e = document.getElementById("err"); e.textContent = m; e.style.display = "block"; }
+</script>
+</body>
+</html>

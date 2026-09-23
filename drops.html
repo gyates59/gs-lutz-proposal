@@ -105,14 +105,18 @@
 
       <h3>How far apart do you want them?</h3>
       <div class="choicegrid">
-        <label class="paychoice" id="sp-2"><input type="radio" name="spacing" value="2 weeks" onchange="recalc()">
-          <span><b>Every 2 weeks</b><span>The classic season cadence &#8212; steady pressure as temps fall</span></span></label>
-        <label class="paychoice sel" id="sp-3"><input type="radio" name="spacing" value="3 weeks" checked onchange="recalc()">
-          <span><b>Every 3 weeks</b><span>A touch more breathing room between landings</span></span></label>
-        <label class="paychoice" id="sp-4"><input type="radio" name="spacing" value="4 weeks" onchange="recalc()">
-          <span><b>Every 4 weeks</b><span>Monthly rhythm through the season</span></span></label>
-        <label class="paychoice" id="sp-call"><input type="radio" name="spacing" value="Greg calls me before each drop" onchange="recalc()">
-          <span><b>Call me before each one</b><span>You and Greg set each date by phone &#8212; weather's call</span></span></label>
+        <label class="paychoice" id="sp-1"><input type="radio" name="spacing" value="1 week apart" onchange="recalc()">
+          <span><b>1 week apart</b><span>Fast stack &#8212; back to back landings</span></span></label>
+        <label class="paychoice sel" id="sp-2"><input type="radio" name="spacing" value="2 weeks apart" checked onchange="recalc()">
+          <span><b>2 weeks apart</b><span>The classic season cadence</span></span></label>
+        <label class="paychoice" id="sp-3"><input type="radio" name="spacing" value="3 weeks apart" onchange="recalc()">
+          <span><b>3 weeks apart</b><span>More breathing room between landings</span></span></label>
+        <label class="paychoice" id="sp-custom"><input type="radio" name="spacing" value="custom" onchange="recalc()">
+          <span><b>Or set your own</b><span style="display:flex;align-items:center;gap:6px;margin-top:4px">
+            <input type="number" id="customdays" min="5" max="60" placeholder="days"
+              style="width:80px;padding:6px 8px;border:1.5px solid var(--line);border-radius:6px;font-size:13px"
+              oninput="document.getElementById('sp-custom').querySelector('input[type=radio]').checked=true;recalc()"
+              onclick="event.stopPropagation()"> days between drops</span></span></label>
       </div>
 
       <h3>Same cards, or a fresh look?</h3>
@@ -187,7 +191,12 @@ const TOKEN = "gsm-proposal-2026";
 const DROP_ACH = 4224.84, D1_CARD = 4351.59, D1_ACH = 4224.84;
 
 function isCard() { return document.querySelector('input[name=pay]:checked').value === "card"; }
-function spacing() { return document.querySelector('input[name=spacing]:checked').value; }
+function spacing() {
+  const v = document.querySelector('input[name=spacing]:checked').value;
+  if (v !== "custom") return v;
+  const d = parseInt(document.getElementById("customdays").value, 10);
+  return (isNaN(d) ? "custom (days not entered)" : d + " days apart");
+}
 function design() { return document.querySelector('input[name=design]:checked').value; }
 function money(v) { return "$" + v.toLocaleString("en-US", {minimumFractionDigits: 2, maximumFractionDigits: 2}); }
 function r2(v) { return Math.round(v * 100) / 100; }
@@ -204,7 +213,7 @@ function recalc() {
   document.getElementById("totnote").innerHTML = card ? "&#183; incl. 3% card" : "&#183; ACH, no fee";
   document.getElementById("pc-ach").classList.toggle("sel", !card);
   document.getElementById("pc-card").classList.toggle("sel", card);
-  for (const id of ["sp-2","sp-3","sp-4","sp-call"]) document.getElementById(id).classList.toggle("sel", document.getElementById(id).querySelector("input").checked);
+  for (const id of ["sp-1","sp-2","sp-3","sp-custom"]) document.getElementById(id).classList.toggle("sel", document.getElementById(id).querySelector("input[type=radio]").checked);
   document.getElementById("ds-same").classList.toggle("sel", design() === "same");
   document.getElementById("ds-new").classList.toggle("sel", design() === "new");
 }
@@ -217,6 +226,10 @@ async function submitQueue() {
   if (!get("sname") || !get("semail")) return showErr("Please enter your name and email.");
   if (!get("sig")) return showErr("Please type your name as your signature.");
   if (!document.getElementById("auth").checked) return showErr("Please check the authorization box.");
+  if (document.querySelector('input[name=spacing]:checked').value === "custom") {
+    const d = parseInt(document.getElementById("customdays").value, 10);
+    if (isNaN(d) || d < 5 || d > 60) return showErr("Please enter the number of days between drops (5 to 60).");
+  }
   const card = isCard();
   const pd = perDrop();
   const two = r2(pd * 2);
